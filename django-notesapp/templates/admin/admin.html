@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <title>Admincontrol</title>
+</head>
+<body>
+    {% if user.is_staff == True %}
+    <h1 class="text-primary text-center my-4">You are Staff member</h1>
+    
+
+    <form method="post">
+        {% csrf_token %}
+        <select name="semoption" class="form-select mx-auto w-25">
+            <option value="one">1</option>
+            <option value="two">2</option>
+            <option value="three">3</option>
+            <option value="four">4</option>
+        </select>
+       <center>
+        <button class="btn btn-primary my-2">Search</button>
+       </center>
+    </form>
+
+
+    {% if form is None%}
+
+        <h2 class="text-danger text-center my-2">*Choose a semester to continue</h2>
+
+    {% else %}
+
+            
+            <div class="card m-4">
+                <div class="card-body">
+                    <h2 class="text-primary my-2 text-center">
+                        Sem {{sem|capfirst}}
+                    </h2>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form}}
+                        <center>
+                            <input type="submit" class="btn btn-primary my-2" value="Submit">
+                        </center>
+                    </form>
+                </div>
+            </div>
+
+
+        {% for message in messages %}
+            <h1 class="text-center text-primary my-2">{{message}}</h1>
+        {% endfor %}
+
+    {% endif %}
+
+    {% else %}
+        <h1 class="text-center text-primary my-4 p-2">You Do not have Permission to access this page</h1>
+        <center>
+            <a href="{% url 'login'%}" class="btn btn-primary mx-auto my-2">Home Page</a>
+        </center>
+    {% endif %}
+</body>
+</html>

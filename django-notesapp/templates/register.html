@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="card m-4">
+  <div class="card-header">
+    Registered
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Hello <span class="text-primary">{{user.username}}</span></h5>
+    <p class="card-text">You are already registerd user.</p>
+    <a href="{% url 'logged'%}" class="btn btn-primary">Go to download page</a>
+  </div>
+</div>
+{% else %}
+<form class="w-75 m-auto" style="max-width: 300px;" method="POST">
+    {% csrf_token %}
+    <p class="text-center text-primary display-4 my-4">Register</p>
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Username" name="username"id="exampleInputEmail1"  autocomplete="off" aria-describedby="emailHelp">
+    </div>
+    <div class="mb-3">
+        <input type="email" class="form-control" placeholder="Email" name="email" id="exampleInputPassword1" autocomplete="off">
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Firs tName" name="fname" id="exampleInputPassword1" autocomplete="off">
+    </div>
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Last Name" name="lname" id="exampleInputPassword1" autocomplete="off">
+  </div>
+    <div class="mb-3">
+      <input type="password" class="form-control" placeholder="Enter Password" name="password" id="exampleInputPassword1" autocomplete="off">
+    </div>
+    <div class="mb-3">
+        <input type="password" class="form-control" placeholder="Confirm Password" name="password1" id="exampleInputPassword1" autocomplete="off">
+      </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endif %}
+{% for message in messages %}
+<p class="text-center text-danger my-2">{{message}}</p>
+{% endfor %}
+{% endblock %}
